@@ -84,6 +84,17 @@ public class ConnectionProcessViewModel : MyReactiveObject
         return "(unknown)";
     }
 
+    private static string GetOutboundDisplay(ConnectionItem item)
+    {
+        var finalOutbound = item.chains?
+            .LastOrDefault(x => x.IsNotEmpty())?
+            .Trim();
+
+        return string.Equals(finalOutbound, "direct", StringComparison.OrdinalIgnoreCase)
+            ? "直连"
+            : "代理";
+    }
+
     private void RebuildFlatList()
     {
         var flat = new List<ConnectionProcessModel>();
@@ -135,6 +146,7 @@ public class ConnectionProcessViewModel : MyReactiveObject
                     Host = host,
                     Network = item.metadata?.network,
                     Type = item.metadata?.type,
+                    Outbound = GetOutboundDisplay(item),
                     Elapsed = (dtNow - item.start).ToString(@"hh\:mm\:ss"),
                     Chain = $"{item.rule} , {string.Join("->", item.chains ?? new())}",
                     Upload = item.upload,

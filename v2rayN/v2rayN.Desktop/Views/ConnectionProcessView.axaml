@@ -120,6 +120,11 @@
                     Header="{x:Static resx:ResUI.TbSortingType}"
                     Tag="Type" />
                 <DataGridTextColumn
+                    Width="80"
+                    Binding="{Binding Outbound}"
+                    Header="出站"
+                    Tag="Outbound" />
+                <DataGridTextColumn
                     Width="300"
                     Binding="{Binding Chain}"
                     Header="{x:Static resx:ResUI.TbSortingChain}"

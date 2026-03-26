@@ -16,6 +16,7 @@ public class ConnectionProcessModel
     public string? Host { get; set; }
     public string? Network { get; set; }
     public string? Type { get; set; }
+    public string? Outbound { get; set; }
     public string? Chain { get; set; }
     public string? Elapsed { get; set; }
     public ulong Upload { get; set; }
