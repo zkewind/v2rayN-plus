@@ -119,6 +119,7 @@
                         <TabItem x:Name="tabMsgView" Header="{x:Static resx:ResUI.MsgInformationTitle}" />
                         <TabItem x:Name="tabClashProxies" Header="{x:Static resx:ResUI.TbProxies}" />
                         <TabItem x:Name="tabClashConnections" Header="{x:Static resx:ResUI.TbConnections}" />
+                        <TabItem x:Name="tabConnectionProcess" Header="{x:Static resx:ResUI.TbProcessConnections}" />
                     </TabControl>
                 </Grid>
                 <Grid
@@ -134,6 +135,7 @@
                         <TabItem x:Name="tabMsgView1" Header="{x:Static resx:ResUI.MsgInformationTitle}" />
                         <TabItem x:Name="tabClashProxies1" Header="{x:Static resx:ResUI.TbProxies}" />
                         <TabItem x:Name="tabClashConnections1" Header="{x:Static resx:ResUI.TbConnections}" />
+                        <TabItem x:Name="tabConnectionProcess1" Header="{x:Static resx:ResUI.TbProcessConnections}" />
                     </TabControl>
                 </Grid>
                 <Grid x:Name="gridMain2" IsVisible="False">
@@ -142,6 +144,7 @@
                         <TabItem x:Name="tabMsgView2" Header="{x:Static resx:ResUI.MsgInformationTitle}" />
                         <TabItem x:Name="tabClashProxies2" Header="{x:Static resx:ResUI.TbProxies}" />
                         <TabItem x:Name="tabClashConnections2" Header="{x:Static resx:ResUI.TbConnections}" />
+                        <TabItem x:Name="tabConnectionProcess2" Header="{x:Static resx:ResUI.TbProcessConnections}" />
                     </TabControl>
                 </Grid>
             </Grid>

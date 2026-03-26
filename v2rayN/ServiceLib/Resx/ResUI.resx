@@ -1164,6 +1164,12 @@
   <data name="TbConnections" xml:space="preserve">
     <value>Connections</value>
   </data>
+  <data name="TbProcessConnections" xml:space="preserve">
+    <value>Process Connections</value>
+  </data>
+  <data name="TbSortingProcess" xml:space="preserve">
+    <value>Process/Connection</value>
+  </data>
   <data name="menuConnectionClose" xml:space="preserve">
     <value>Close Connection</value>
   </data>

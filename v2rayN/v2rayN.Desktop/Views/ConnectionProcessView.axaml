@@ -1,0 +1,135 @@
+<UserControl
+    x:Class="v2rayN.Desktop.Views.ConnectionProcessView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resx="clr-namespace:ServiceLib.Resx;assembly=ServiceLib"
+    xmlns:vms="clr-namespace:ServiceLib.ViewModels;assembly=ServiceLib"
+    xmlns:models="clr-namespace:ServiceLib.Models;assembly=ServiceLib"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vms:ConnectionProcessViewModel"
+    mc:Ignorable="d">
+
+    <DockPanel Margin="2">
+        <WrapPanel
+            VerticalAlignment="Center"
+            Margin="{StaticResource Margin4}"
+            DockPanel.Dock="Top"
+            Orientation="Horizontal">
+
+            <TextBox
+                x:Name="txtHostFilter"
+                Width="200"
+                VerticalContentAlignment="Center"
+                Margin="{StaticResource MarginLr8}"
+                Watermark="{x:Static resx:ResUI.ConnectionsHostFilterTitle}" />
+
+            <Button
+                x:Name="btnConnectionCloseAll"
+                Classes="IconButton Success"
+                Margin="{StaticResource MarginLr8}"
+                ToolTip.Tip="{x:Static resx:ResUI.menuConnectionCloseAll}">
+                <Button.Content>
+                    <PathIcon Data="{StaticResource SemiIconClose}" />
+                </Button.Content>
+            </Button>
+
+            <TextBlock
+                VerticalAlignment="Center"
+                Margin="{StaticResource MarginLr8}"
+                Text="{x:Static resx:ResUI.TbAutoRefresh}" />
+            <ToggleSwitch
+                x:Name="togAutoRefresh"
+                HorizontalAlignment="Left"
+                Margin="{StaticResource MarginLr8}" />
+        </WrapPanel>
+
+        <DataGrid
+            x:Name="lstProcessConnections"
+            AutoGenerateColumns="False"
+            BorderThickness="1"
+            CanUserResizeColumns="True"
+            GridLinesVisibility="All"
+            HeadersVisibility="Column"
+            IsReadOnly="True"
+            ItemsSource="{Binding ProcessItems}">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="menuConnectionCloseAll" Header="{x:Static resx:ResUI.menuConnectionCloseAll}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <!-- 进程/连接 列 -->
+                <DataGridTemplateColumn
+                    Width="300"
+                    Header="{x:Static resx:ResUI.TbSortingProcess}"
+                    Tag="Process">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="models:ConnectionProcessModel">
+                            <Panel>
+                                <!-- 进程行 -->
+                                <Button
+                                    IsVisible="{Binding IsProcess}"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    Command="{Binding $parent[DataGrid].DataContext.ToggleExpandCmd}"
+                                    CommandParameter="{Binding .}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="10"
+                                            IsVisible="{Binding IsExpanded}"
+                                            Text="▼" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="10"
+                                            IsVisible="{Binding !IsExpanded}"
+                                            Text="▶" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontWeight="SemiBold"
+                                            Text="{Binding ProcessName}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource SemiColorPrimary}"
+                                            Text="{Binding ConnectionCount, StringFormat='({0})'}" />
+                                    </StackPanel>
+                                </Button>
+                                <!-- 连接行 -->
+                                <TextBlock
+                                    IsVisible="{Binding !IsProcess}"
+                                    Margin="20,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Host}" />
+                            </Panel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn
+                    Width="80"
+                    Binding="{Binding Network}"
+                    Header="{x:Static resx:ResUI.TbSortingNetwork}"
+                    Tag="Network" />
+                <DataGridTextColumn
+                    Width="160"
+                    Binding="{Binding Type}"
+                    Header="{x:Static resx:ResUI.TbSortingType}"
+                    Tag="Type" />
+                <DataGridTextColumn
+                    Width="300"
+                    Binding="{Binding Chain}"
+                    Header="{x:Static resx:ResUI.TbSortingChain}"
+                    Tag="Chain" />
+                <DataGridTextColumn
+                    Width="100"
+                    Binding="{Binding Elapsed}"
+                    Header="{x:Static resx:ResUI.TbSortingTime}"
+                    Tag="Elapsed" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

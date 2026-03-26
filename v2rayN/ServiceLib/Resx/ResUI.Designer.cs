@@ -2699,7 +2699,16 @@ namespace ServiceLib.Resx {
                 return ResourceManager.GetString("TbConnections", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   查找类似 Process Connections 的本地化字符串。
+        /// </summary>
+        public static string TbProcessConnections {
+            get {
+                return ResourceManager.GetString("TbProcessConnections", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   查找类似 Core Type 的本地化字符串。
         /// </summary>
@@ -4392,6 +4401,15 @@ namespace ServiceLib.Resx {
             }
         }
         
+        /// <summary>
+        ///   查找类似 Process/Connection 的本地化字符串。
+        /// </summary>
+        public static string TbSortingProcess {
+            get {
+                return ResourceManager.GetString("TbSortingProcess", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   查找类似 Time 的本地化字符串。
         /// </summary>

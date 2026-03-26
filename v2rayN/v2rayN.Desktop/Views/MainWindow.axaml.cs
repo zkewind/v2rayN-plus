@@ -37,6 +37,7 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
                 tabMsgView.Content ??= new MsgView();
                 tabClashProxies.Content ??= new ClashProxiesView();
                 tabClashConnections.Content ??= new ClashConnectionsView();
+                tabConnectionProcess.Content ??= new ConnectionProcessView();
                 gridMain.IsVisible = true;
                 break;
 
@@ -45,6 +46,7 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
                 tabMsgView1.Content ??= new MsgView();
                 tabClashProxies1.Content ??= new ClashProxiesView();
                 tabClashConnections1.Content ??= new ClashConnectionsView();
+                tabConnectionProcess1.Content ??= new ConnectionProcessView();
                 gridMain1.IsVisible = true;
                 break;
 
@@ -54,6 +56,7 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
                 tabMsgView2.Content ??= new MsgView();
                 tabClashProxies2.Content ??= new ClashProxiesView();
                 tabClashConnections2.Content ??= new ClashConnectionsView();
+                tabConnectionProcess2.Content ??= new ConnectionProcessView();
                 gridMain2.IsVisible = true;
                 break;
         }
@@ -108,6 +111,7 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabMsgView.IsVisible).DisposeWith(disposables);
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashProxies.IsVisible).DisposeWith(disposables);
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashConnections.IsVisible).DisposeWith(disposables);
+                    this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabConnectionProcess.IsVisible).DisposeWith(disposables);
                     this.Bind(ViewModel, vm => vm.TabMainSelectedIndex, v => v.tabMain.SelectedIndex).DisposeWith(disposables);
                     break;
 
@@ -115,6 +119,7 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabMsgView1.IsVisible).DisposeWith(disposables);
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashProxies1.IsVisible).DisposeWith(disposables);
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashConnections1.IsVisible).DisposeWith(disposables);
+                    this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabConnectionProcess1.IsVisible).DisposeWith(disposables);
                     this.Bind(ViewModel, vm => vm.TabMainSelectedIndex, v => v.tabMain1.SelectedIndex).DisposeWith(disposables);
                     break;
 
@@ -122,6 +127,7 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
                 default:
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashProxies2.IsVisible).DisposeWith(disposables);
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashConnections2.IsVisible).DisposeWith(disposables);
+                    this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabConnectionProcess2.IsVisible).DisposeWith(disposables);
                     this.Bind(ViewModel, vm => vm.TabMainSelectedIndex, v => v.tabMain2.SelectedIndex).DisposeWith(disposables);
                     break;
             }

@@ -1161,6 +1161,12 @@
   <data name="TbConnections" xml:space="preserve">
     <value>当前连接</value>
   </data>
+  <data name="TbProcessConnections" xml:space="preserve">
+    <value>进程连接</value>
+  </data>
+  <data name="TbSortingProcess" xml:space="preserve">
+    <value>进程/连接</value>
+  </data>
   <data name="menuConnectionClose" xml:space="preserve">
     <value>关闭连接</value>
   </data>
