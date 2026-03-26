@@ -399,3 +399,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
+/.dotnet_cli_home/
