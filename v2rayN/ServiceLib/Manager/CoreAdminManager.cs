@@ -44,7 +44,7 @@ public class CoreAdminManager
             displayLog: true,
             redirectInput: true,
             environmentVars: null,
-            updateFunc: _updateFunc
+            updateFunc: UpdateFunc
         );
 
         await procService.StartAsync(AppManager.Instance.LinuxSudoPwd);

@@ -21,6 +21,9 @@ public partial class CoreConfigSingboxService
                 default:
                     break;
             }
+
+            _coreConfig.log.timestamp = false;
+
             if (_config.CoreBasicItem.Loglevel == Global.None)
             {
                 _coreConfig.log.disabled = true;

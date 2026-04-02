@@ -67,6 +67,8 @@ public class CoreManager
             return;
         }
 
+        ConnectionFailureTracker.Instance.Clear();
+
         var node = mainContext.Node;
         var fileName = Utils.GetBinConfigPath(Global.CoreConfigFileName);
         var result = await CoreConfigHandler.GenerateClientConfig(mainContext, fileName);
@@ -141,6 +143,8 @@ public class CoreManager
     {
         try
         {
+            ConnectionFailureTracker.Instance.Clear();
+
             if (_linuxSudo)
             {
                 await CoreAdminManager.Instance.KillProcessAsLinuxSudo();
@@ -206,7 +210,12 @@ public class CoreManager
 
     private async Task UpdateFunc(bool notify, string msg)
     {
-        await _updateFunc?.Invoke(notify, msg);
+        if (!notify)
+        {
+            ConnectionFailureTracker.Instance.ProcessLogLine(msg);
+        }
+
+        await _updateFunc?.Invoke(notify, notify ? msg : Logging.FormatMessageForDisplay(msg));
     }
 
     #endregion Private
@@ -230,7 +239,7 @@ public class CoreManager
                 && Utils.IsNonWindows())
             {
                 _linuxSudo = true;
-                await CoreAdminManager.Instance.Init(_config, _updateFunc);
+                await CoreAdminManager.Instance.Init(_config, UpdateFunc);
                 return await CoreAdminManager.Instance.RunProcessAsLinuxSudo(fileName, coreInfo, configPath);
             }
 
@@ -259,7 +268,7 @@ public class CoreManager
             displayLog: displayLog,
             redirectInput: false,
             environmentVars: environmentVars,
-            updateFunc: _updateFunc
+            updateFunc: UpdateFunc
         );
 
         await procService.StartAsync();
