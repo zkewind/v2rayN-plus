@@ -400,3 +400,4 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 /.dotnet_cli_home/
+/.dotnet/

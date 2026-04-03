@@ -48,6 +48,7 @@ public class Global
     public const string ProxyTag = "proxy";
     public const string DirectTag = "direct";
     public const string BlockTag = "block";
+    public const string ProcessProxyRoutingRemarks = "Process Proxy";
     public const string DnsTag = "dns-module";
     public const string DirectDnsTag = "direct-dns";
     public const string BalancerTagSuffix = "-round";

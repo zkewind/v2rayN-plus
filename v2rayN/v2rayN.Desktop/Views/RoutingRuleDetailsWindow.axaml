@@ -242,12 +242,17 @@
                 BorderBrush="Gray"
                 BorderThickness="1"
                 Header="{x:Static resx:ResUI.TbRoutingRuleProcess}">
-                <TextBox
-                    Name="txtProcess"
-                    VerticalAlignment="Stretch"
-                    Classes="TextArea"
-                    MinLines="10"
-                    TextWrapping="Wrap" />
+                <StackPanel Margin="{StaticResource Margin4}" Spacing="4">
+                    <TextBlock
+                        Foreground="Gray"
+                        Text="Use process name like chrome.exe or a full path. Recommended in TUN + sing-box." />
+                    <TextBox
+                        Name="txtProcess"
+                        VerticalAlignment="Stretch"
+                        Classes="TextArea"
+                        MinLines="10"
+                        TextWrapping="Wrap" />
+                </StackPanel>
             </HeaderedContentControl>
         </Grid>
     </DockPanel>

@@ -286,12 +286,19 @@
                 Grid.Column="4"
                 Header="{x:Static resx:ResUI.TbRoutingRuleProcess}"
                 Style="{StaticResource MyGroupBox}">
-                <TextBox
-                    Name="txtProcess"
-                    AcceptsReturn="True"
-                    Style="{StaticResource DefTextBox}"
-                    TextWrapping="Wrap"
-                    VerticalScrollBarVisibility="Auto" />
+                <StackPanel Margin="{StaticResource Margin4}">
+                    <TextBlock
+                        Margin="{StaticResource Margin4}"
+                        Foreground="{DynamicResource MaterialDesignBodyLight}"
+                        Style="{StaticResource ToolbarTextBlock}"
+                        Text="Use process name like chrome.exe or a full path. Recommended in TUN + sing-box." />
+                    <TextBox
+                        Name="txtProcess"
+                        AcceptsReturn="True"
+                        Style="{StaticResource DefTextBox}"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                </StackPanel>
             </GroupBox>
         </Grid>
     </DockPanel>

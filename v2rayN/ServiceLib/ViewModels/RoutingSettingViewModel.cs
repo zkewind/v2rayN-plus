@@ -18,6 +18,7 @@ public class RoutingSettingViewModel : MyReactiveObject
     public string DomainStrategy4Singbox { get; set; }
 
     public ReactiveCommand<Unit, Unit> RoutingAdvancedAddCmd { get; }
+    public ReactiveCommand<Unit, Unit> ProcessProxyRoutingCmd { get; }
     public ReactiveCommand<Unit, Unit> RoutingAdvancedRemoveCmd { get; }
     public ReactiveCommand<Unit, Unit> RoutingAdvancedSetDefaultCmd { get; }
     public ReactiveCommand<Unit, Unit> RoutingAdvancedImportRulesCmd { get; }
@@ -39,6 +40,10 @@ public class RoutingSettingViewModel : MyReactiveObject
         RoutingAdvancedAddCmd = ReactiveCommand.CreateFromTask(async () =>
         {
             await RoutingAdvancedEditAsync(true);
+        });
+        ProcessProxyRoutingCmd = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await OpenProcessProxyRoutingAsync();
         });
         RoutingAdvancedRemoveCmd = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -129,6 +134,28 @@ public class RoutingSettingViewModel : MyReactiveObject
                 return;
             }
         }
+        if (await _updateView?.Invoke(EViewAction.RoutingRuleSettingWindow, item) == true)
+        {
+            await RefreshRoutingItems();
+            IsModified = true;
+        }
+    }
+
+    public async Task OpenProcessProxyRoutingAsync()
+    {
+        var item = await AppManager.Instance.GetRoutingItemViaRemarks(Global.ProcessProxyRoutingRemarks);
+        if (item == null)
+        {
+            var routings = await AppManager.Instance.RoutingItems() ?? [];
+            item = new RoutingItem()
+            {
+                Remarks = Global.ProcessProxyRoutingRemarks,
+                Url = string.Empty,
+                Sort = (routings.LastOrDefault()?.Sort ?? routings.Count) + 1,
+                Enabled = true,
+            };
+        }
+
         if (await _updateView?.Invoke(EViewAction.RoutingRuleSettingWindow, item) == true)
         {
             await RefreshRoutingItems();

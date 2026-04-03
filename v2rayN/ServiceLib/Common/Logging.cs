@@ -14,7 +14,7 @@ public class Logging
         @"^(?:[+-]\d{2}:?\d{2}\s+)?(?:\d{4}[-/]\d{2}[-/]\d{2}[ T]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:\s*[+-]\d{2}:?\d{2})?|time=\d{4}-\d{2}-\d{2}T\S+)\s*",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
     private static readonly Regex LevelPrefixRegex = new(
-        @"^(?:\[(?<levelBracket>trace|debug|info|warning|warn|error|fatal)\]|(?<levelWord>trace|debug|debu|info|warn|warning|error|erro|fatal|fata)(?:\[[^\]]+\])?|level=(?<levelKv>trace|debug|info|warning|warn|error|fatal))\s*",
+        @"^(?:(?:level=)?(?<level>trace|debug|debu|info|warn|warning|error|erro|fatal|fata)|\[(?<level2>trace|debug|info|warning|error|fatal)\])(?:\[[^\]]+\])?\s*",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
     private static readonly Logger _logger1 = LogManager.GetLogger("Log1");
     private static readonly Logger _logger2 = LogManager.GetLogger("Log2");
@@ -51,7 +51,7 @@ public class Logging
 
     public static string FormatMessageForDisplay(string? message)
     {
-        if (!UseCompactLayout || string.IsNullOrEmpty(message))
+        if (!UseCompactLayout || message.IsNullOrEmpty())
         {
             return message ?? string.Empty;
         }
@@ -105,7 +105,7 @@ public class Logging
 
     private static string FormatSingleLineForDisplay(string line)
     {
-        if (string.IsNullOrWhiteSpace(line))
+        if (line.IsNullOrEmpty())
         {
             return line;
         }
@@ -124,11 +124,9 @@ public class Logging
             return text;
         }
 
-        var rawLevel = match.Groups["levelBracket"].Success
-            ? match.Groups["levelBracket"].Value
-            : match.Groups["levelWord"].Success
-                ? match.Groups["levelWord"].Value
-                : match.Groups["levelKv"].Value;
+        var rawLevel = match.Groups["level"].Success
+            ? match.Groups["level"].Value
+            : match.Groups["level2"].Value;
         var level = rawLevel.ToLowerInvariant() switch
         {
             "trace" => "T",
@@ -140,7 +138,7 @@ public class Logging
             _ => string.Empty
         };
 
-        if (string.IsNullOrEmpty(level))
+        if (level.IsNullOrEmpty())
         {
             return text;
         }

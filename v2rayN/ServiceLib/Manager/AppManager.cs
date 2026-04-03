@@ -285,6 +285,16 @@ public sealed class AppManager
         return await SQLiteHelper.Instance.TableAsync<RoutingItem>().FirstOrDefaultAsync(it => it.Id == id);
     }
 
+    public async Task<RoutingItem?> GetRoutingItemViaRemarks(string? remarks)
+    {
+        if (remarks.IsNullOrEmpty())
+        {
+            return null;
+        }
+
+        return await SQLiteHelper.Instance.TableAsync<RoutingItem>().FirstOrDefaultAsync(it => it.Remarks == remarks);
+    }
+
     public async Task<List<DNSItem>?> DNSItems()
     {
         return await SQLiteHelper.Instance.TableAsync<DNSItem>().ToListAsync();

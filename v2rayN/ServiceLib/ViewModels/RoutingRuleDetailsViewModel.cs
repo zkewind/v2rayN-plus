@@ -4,6 +4,7 @@ public class RoutingRuleDetailsViewModel : MyReactiveObject
 {
     public IList<string> ProtocolItems { get; set; }
     public IList<string> InboundTagItems { get; set; }
+    public bool PreferProcessFocus { get; }
 
     [Reactive]
     public RulesItem SelectedSource { get; set; }
@@ -41,6 +42,7 @@ public class RoutingRuleDetailsViewModel : MyReactiveObject
             rulesItem.OutboundTag = Global.ProxyTag;
             rulesItem.Enabled = true;
             SelectedSource = rulesItem;
+            PreferProcessFocus = true;
         }
         else
         {
@@ -63,14 +65,15 @@ public class RoutingRuleDetailsViewModel : MyReactiveObject
         {
             SelectedSource.Domain = Utils.String2ListSorted(Domain);
             SelectedSource.Ip = Utils.String2ListSorted(IP);
-            SelectedSource.Process = Utils.String2ListSorted(Process);
+            SelectedSource.Process = NormalizeProcessItems(Utils.String2List(Process), true);
         }
         else
         {
             SelectedSource.Domain = Utils.String2List(Domain);
             SelectedSource.Ip = Utils.String2List(IP);
-            SelectedSource.Process = Utils.String2List(Process);
+            SelectedSource.Process = NormalizeProcessItems(Utils.String2List(Process), false);
         }
+        Process = Utils.List2String(SelectedSource.Process, true);
         SelectedSource.Protocol = ProtocolItems?.ToList();
         SelectedSource.InboundTag = InboundTagItems?.ToList();
         SelectedSource.RuleType = RuleType.IsNullOrEmpty() ? null : (ERuleType)Enum.Parse(typeof(ERuleType), RuleType);
@@ -89,5 +92,59 @@ public class RoutingRuleDetailsViewModel : MyReactiveObject
         }
         //NoticeHandler.Instance.Enqueue(ResUI.OperationSuccess);
         await _updateView?.Invoke(EViewAction.CloseWindow, null);
+    }
+
+    private static List<string>? NormalizeProcessItems(List<string>? processes, bool sort)
+    {
+        if (processes == null || processes.Count == 0)
+        {
+            return null;
+        }
+
+        var result = new List<string>();
+        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var item in processes)
+        {
+            var process = item.Trim();
+            if (process.IsNullOrEmpty())
+            {
+                continue;
+            }
+
+            var isPath = process.Contains('/') || process.Contains('\\') || Path.IsPathRooted(process);
+            if (isPath)
+            {
+                if (Utils.IsWindows())
+                {
+                    process = process.Replace('/', '\\');
+                    if (!Path.HasExtension(process))
+                    {
+                        process += ".exe";
+                    }
+                }
+            }
+            else
+            {
+                process = Utils.GetExeName(Path.GetFileName(process));
+            }
+
+            if (seen.Add(process))
+            {
+                result.Add(process);
+            }
+        }
+
+        if (result.Count == 0)
+        {
+            return null;
+        }
+
+        if (sort)
+        {
+            result = result.OrderBy(it => it, StringComparer.OrdinalIgnoreCase).ToList();
+        }
+
+        return result;
     }
 }

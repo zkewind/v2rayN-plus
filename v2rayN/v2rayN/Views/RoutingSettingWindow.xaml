@@ -40,6 +40,16 @@
                     </StackPanel>
                 </Button>
                 <Separator />
+                <Button x:Name="menuProcessProxyRouting2">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Margin="{StaticResource MarginRight8}"
+                            VerticalAlignment="Center"
+                            Kind="Application" />
+                        <TextBlock Style="{StaticResource ToolbarTextBlock}" Text="Process Proxy" />
+                    </StackPanel>
+                </Button>
+                <Separator />
                 <Button x:Name="menuRoutingAdvancedImportRules2">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon
@@ -121,6 +131,13 @@
                 Style="{StaticResource DefComboBox}" />
         </Grid>
 
+        <TextBlock
+            Margin="8,0,8,8"
+            DockPanel.Dock="Top"
+            Foreground="{DynamicResource MaterialDesignBodyLight}"
+            Style="{StaticResource ToolbarTextBlock}"
+            Text="Process Proxy is recommended in TUN + sing-box mode." />
+
         <TabControl x:Name="tabAdvanced">
             <TabItem HorizontalAlignment="Left" Header="{x:Static resx:ResUI.TbRoutingTabRuleList}">
                 <DataGrid
@@ -141,6 +158,10 @@
                                 x:Name="menuRoutingAdvancedAdd"
                                 Height="{StaticResource MenuItemHeight}"
                                 Header="{x:Static resx:ResUI.menuRoutingAdvancedAdd}" />
+                            <MenuItem
+                                x:Name="menuProcessProxyRouting"
+                                Height="{StaticResource MenuItemHeight}"
+                                Header="Process Proxy" />
                             <MenuItem
                                 x:Name="menuRoutingAdvancedRemove"
                                 Height="{StaticResource MenuItemHeight}"

@@ -69,6 +69,12 @@ public partial class RoutingRuleDetailsWindow : WindowBase<RoutingRuleDetailsVie
 
     private void Window_Loaded(object? sender, RoutedEventArgs e)
     {
+        if (ViewModel?.PreferProcessFocus == true)
+        {
+            txtProcess.Focus();
+            return;
+        }
+
         txtRemarks.Focus();
     }
 

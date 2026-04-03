@@ -17,6 +17,7 @@
     <DockPanel>
         <Menu Margin="{StaticResource Margin4}" DockPanel.Dock="Top">
             <MenuItem x:Name="menuRoutingAdvancedAdd2" Header="{x:Static resx:ResUI.menuRoutingAdvancedAdd}" />
+            <MenuItem x:Name="menuProcessProxyRouting2" Header="Process Proxy" />
             <MenuItem x:Name="menuRoutingAdvancedImportRules2" Header="{x:Static resx:ResUI.menuRoutingAdvancedImportRules}" />
         </Menu>
 
@@ -81,6 +82,12 @@
                 VerticalAlignment="Center" />
         </Grid>
 
+        <TextBlock
+            Margin="{StaticResource Margin4}"
+            DockPanel.Dock="Top"
+            Foreground="Gray"
+            Text="Process Proxy is recommended in TUN + sing-box mode." />
+
         <TabControl x:Name="tabAdvanced">
             <TabItem HorizontalAlignment="Left" Header="{x:Static resx:ResUI.TbRoutingTabRuleList}">
                 <DataGrid
@@ -99,6 +106,7 @@
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem x:Name="menuRoutingAdvancedAdd" Header="{x:Static resx:ResUI.menuRoutingAdvancedAdd}" />
+                            <MenuItem x:Name="menuProcessProxyRouting" Header="Process Proxy" />
                             <MenuItem
                                 x:Name="menuRoutingAdvancedRemove"
                                 Header="{x:Static resx:ResUI.menuRoutingAdvancedRemove}"

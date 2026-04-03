@@ -26,6 +26,16 @@
                 Margin="{StaticResource MarginLr8}"
                 Watermark="{x:Static resx:ResUI.ConnectionsHostFilterTitle}" />
 
+            <CheckBox
+                x:Name="btnShowDirectConnections"
+                Margin="{StaticResource MarginLr8}"
+                Content="Direct" />
+
+            <CheckBox
+                x:Name="btnShowProxyConnections"
+                Margin="{StaticResource MarginLr8}"
+                Content="Proxy" />
+
             <Button
                 x:Name="btnConnectionCloseAll"
                 Classes="IconButton Success"
@@ -57,19 +67,18 @@
             ItemsSource="{Binding ProcessItems}">
             <DataGrid.ContextMenu>
                 <ContextMenu>
+                    <MenuItem x:Name="menuAddRoutingRule" Header="Add Routing Rule..." />
                     <MenuItem x:Name="menuConnectionCloseAll" Header="{x:Static resx:ResUI.menuConnectionCloseAll}" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <!-- 进程/连接 列 -->
                 <DataGridTemplateColumn
-                    Width="300"
+                    Width="280"
                     Header="{x:Static resx:ResUI.TbSortingProcess}"
                     Tag="Process">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate x:DataType="models:ConnectionProcessModel">
                             <Panel>
-                                <!-- 进程行 -->
                                 <Button
                                     IsVisible="{Binding IsProcess}"
                                     Background="Transparent"
@@ -83,12 +92,12 @@
                                             VerticalAlignment="Center"
                                             FontSize="10"
                                             IsVisible="{Binding IsExpanded}"
-                                            Text="▼" />
+                                            Text="v" />
                                         <TextBlock
                                             VerticalAlignment="Center"
                                             FontSize="10"
                                             IsVisible="{Binding !IsExpanded}"
-                                            Text="▶" />
+                                            Text=">" />
                                         <TextBlock
                                             VerticalAlignment="Center"
                                             FontWeight="SemiBold"
@@ -99,7 +108,6 @@
                                             Text="{Binding ConnectionCount, StringFormat='({0})'}" />
                                     </StackPanel>
                                 </Button>
-                                <!-- 连接行 -->
                                 <TextBlock
                                     IsVisible="{Binding !IsProcess}"
                                     Margin="20,0,0,0"
@@ -115,17 +123,22 @@
                     Header="{x:Static resx:ResUI.TbSortingNetwork}"
                     Tag="Network" />
                 <DataGridTextColumn
-                    Width="160"
+                    Width="120"
                     Binding="{Binding Type}"
                     Header="{x:Static resx:ResUI.TbSortingType}"
                     Tag="Type" />
                 <DataGridTextColumn
                     Width="80"
                     Binding="{Binding Outbound}"
-                    Header="出站"
+                    Header="Outbound"
                     Tag="Outbound" />
                 <DataGridTextColumn
-                    Width="300"
+                    Width="320"
+                    Binding="{Binding Status}"
+                    Header="Status"
+                    Tag="Status" />
+                <DataGridTextColumn
+                    Width="240"
                     Binding="{Binding Chain}"
                     Header="{x:Static resx:ResUI.TbSortingChain}"
                     Tag="Chain" />
