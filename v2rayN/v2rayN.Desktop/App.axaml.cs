@@ -1,3 +1,9 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using Avalonia;
+using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
 using v2rayN.Desktop.Views;
 
 namespace v2rayN.Desktop;
@@ -7,6 +13,41 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+
+        // 去重合并的 ResourceDictionary，防止重复添加相同资源导致异常
+        try
+        {
+            var merged = this.Resources?.MergedDictionaries;
+            if (merged != null)
+            {
+                var existingKeys = new HashSet<object>();
+                var toRemove = new List<IResourceDictionary>();
+
+                foreach (var dict in merged.OfType<IResourceDictionary>().ToList())
+                {
+                    var keys = dict.Select(entry => entry.Key).ToList();
+
+                    // 若任一键已存在，则认为这是重复字典，标记为移除
+                    if (keys.Any(k => existingKeys.Contains(k)))
+                    {
+                        toRemove.Add(dict);
+                    }
+                    else
+                    {
+                        foreach (var k in keys)
+                            existingKeys.Add(k);
+                    }
+                }
+
+                foreach (var d in toRemove)
+                    merged.Remove(d);
+            }
+        }
+        catch (Exception ex)
+        {
+            // 记录但不阻塞启动
+            Logging.SaveLog("Resource dedupe error", ex);
+        }
 
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;

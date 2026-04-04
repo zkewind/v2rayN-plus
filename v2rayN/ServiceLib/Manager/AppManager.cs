@@ -347,6 +347,7 @@ public sealed class AppManager
 #pragma warning restore CS0618
     }
 
+    #pragma warning disable CS0618
     private async Task<int> MigrateProfileExtraSub(List<ProfileItem> batch)
     {
         var updateProfileItems = new List<ProfileItem>();
@@ -443,6 +444,7 @@ public sealed class AppManager
             return 0;
         }
     }
+    #pragma warning restore CS0618
 
     private async Task<bool> MigrateProfileExtraGroup()
     {

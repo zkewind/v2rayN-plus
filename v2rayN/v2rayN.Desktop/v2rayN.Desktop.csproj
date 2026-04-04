@@ -6,6 +6,7 @@
 		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
 		<AssemblyName>v2rayN</AssemblyName>
+		<UseRidGraph>true</UseRidGraph>
 	</PropertyGroup>
 
 	<ItemGroup>

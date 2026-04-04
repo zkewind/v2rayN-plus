@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
+		<UseRidGraph>true</UseRidGraph>
 	</PropertyGroup>
 
 	<ItemGroup>

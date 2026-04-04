@@ -1,0 +1,90 @@
+<UserControl
+    x:Class="v2rayN.Desktop.Views.RoutingRulesView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resx="clr-namespace:ServiceLib.Resx;assembly=ServiceLib"
+    xmlns:vms="clr-namespace:ServiceLib.ViewModels;assembly=ServiceLib"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vms:RoutingRulesViewModel"
+    mc:Ignorable="d">
+
+    <DockPanel Margin="2">
+        <StackPanel
+            Margin="{StaticResource Margin4}"
+            DockPanel.Dock="Top"
+            Orientation="Horizontal"
+            Spacing="8">
+            <Button x:Name="btnOpenRoutingSetting" Content="{x:Static resx:ResUI.menuRoutingSetting}" />
+            <TextBlock
+                VerticalAlignment="Center"
+                Foreground="Gray"
+                Text="Select one or more rule sets to review them together. Double-click an item to open routing settings." />
+        </StackPanel>
+
+        <Grid Margin="{StaticResource Margin4}" ColumnDefinitions="320,10,*">
+            <Border
+                Grid.Column="0"
+                Padding="{StaticResource Margin4}"
+                Theme="{DynamicResource CardBorder}">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{x:Static resx:ResUI.menuRoutingSetting}" />
+                    <TreeView
+                        x:Name="trvRoutingSets"
+                        ItemsSource="{Binding TreeNodes}">
+                        <TreeView.ItemTemplate>
+                            <TreeDataTemplate ItemsSource="{Binding Children}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <CheckBox
+                                        IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                                        IsVisible="{Binding IsLeaf}" />
+                                    <TextBlock>
+                                        <Run Text="{Binding Title}" />
+                                        <Run Text=" " />
+                                        <Run Foreground="Gray" Text="{Binding RuleCountText}" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </TreeDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </StackPanel>
+            </Border>
+
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
+
+            <Border
+                Grid.Column="2"
+                Padding="{StaticResource Margin4}"
+                Theme="{DynamicResource CardBorder}">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{x:Static resx:ResUI.menuRuleList}" />
+                    <DataGrid
+                        x:Name="lstRoutingRules"
+                        AutoGenerateColumns="False"
+                        BorderThickness="1"
+                        CanUserResizeColumns="True"
+                        GridLinesVisibility="All"
+                        HeadersVisibility="Column"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding RuleItems}">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Width="60" Binding="{Binding Enabled}" Header="" />
+                            <DataGridTextColumn Width="160" Binding="{Binding RoutingRemarks}" Header="Rule Set" />
+                            <DataGridTextColumn Width="70" Binding="{Binding RuleIndex}" Header="#" />
+                            <DataGridTextColumn Width="150" Binding="{Binding Remarks}" Header="{x:Static resx:ResUI.LvRemarks}" />
+                            <DataGridTextColumn Width="100" Binding="{Binding RuleTypeName}" Header="{x:Static resx:ResUI.TbRuleType}" />
+                            <DataGridTextColumn Width="130" Binding="{Binding OutboundTag}" Header="outboundTag" />
+                            <DataGridTextColumn Width="100" Binding="{Binding Port}" Header="port" />
+                            <DataGridTextColumn Width="100" Binding="{Binding Protocols}" Header="protocol" />
+                            <DataGridTextColumn Width="120" Binding="{Binding InboundTags}" Header="inboundTag" />
+                            <DataGridTextColumn Width="100" Binding="{Binding Network}" Header="network" />
+                            <DataGridTextColumn Width="*" Binding="{Binding MatchItems}" Header="domain / ip / process" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </DockPanel>
+</UserControl>
