@@ -18,10 +18,31 @@ public partial class MsgView : ReactiveUserControl<MsgViewModel>
             this.Bind(ViewModel, vm => vm.AutoRefresh, v => v.togAutoRefresh.IsChecked).DisposeWith(disposables);
         });
 
-        TextEditorKeywordHighlighter.Attach(txtMsg, Global.LogLevelColors.ToDictionary(
-                kv => kv.Key,
-                kv => (IBrush)new SolidColorBrush(Color.Parse(kv.Value))
-            ));
+        var keywordBrushMap = new Dictionary<string, IBrush>(StringComparer.OrdinalIgnoreCase);
+        foreach (var kv in Global.LogLevelColors)
+        {
+            var brush = (IBrush)new SolidColorBrush(Color.Parse(kv.Value));
+            keywordBrushMap[kv.Key] = brush;
+
+            switch (kv.Key.ToLowerInvariant())
+            {
+                case "debug":
+                    keywordBrushMap["[D]"] = brush;
+                    break;
+                case "info":
+                    keywordBrushMap["[I]"] = brush;
+                    break;
+                case "warning":
+                    keywordBrushMap["warn"] = brush;
+                    keywordBrushMap["[W]"] = brush;
+                    break;
+                case "error":
+                    keywordBrushMap["[E]"] = brush;
+                    break;
+            }
+        }
+
+        TextEditorKeywordHighlighter.Attach(txtMsg, keywordBrushMap);
     }
 
     private async Task<bool> UpdateViewHandler(EViewAction action, object? obj)
