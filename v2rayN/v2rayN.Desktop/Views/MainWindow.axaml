@@ -126,16 +126,22 @@
                     x:Name="gridMain1"
                     IsVisible="False"
                     RowDefinitions="1*,10,1*">
-                    <ContentControl x:Name="tabProfiles1" Grid.Row="0" />
+                    <TabControl
+                        x:Name="tabTopMain1"
+                        Grid.Row="0"
+                        HorizontalContentAlignment="Left"
+                        SelectedIndex="1">
+                        <TabItem x:Name="tabClashProxies1" Header="{x:Static resx:ResUI.TbProxies}" />
+                        <TabItem x:Name="tabProfiles1" Header="{x:Static resx:ResUI.menuSubscription}" />
+                        <TabItem x:Name="tabClashConnections1" Header="{x:Static resx:ResUI.TbConnections}" />
+                        <TabItem x:Name="tabConnectionProcess1" Header="{x:Static resx:ResUI.TbProcessConnections}" />
+                    </TabControl>
                     <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
                     <TabControl
                         x:Name="tabMain1"
                         Grid.Row="2"
                         TabStripPlacement="Left">
                         <TabItem x:Name="tabMsgView1" Header="{x:Static resx:ResUI.MsgInformationTitle}" />
-                        <TabItem x:Name="tabClashProxies1" Header="{x:Static resx:ResUI.TbProxies}" />
-                        <TabItem x:Name="tabClashConnections1" Header="{x:Static resx:ResUI.TbConnections}" />
-                        <TabItem x:Name="tabConnectionProcess1" Header="{x:Static resx:ResUI.TbProcessConnections}" />
                     </TabControl>
                 </Grid>
                 <Grid x:Name="gridMain2" IsVisible="False">

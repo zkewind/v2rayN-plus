@@ -121,6 +121,15 @@ public partial class MainWindow : WindowBase<MainWindowViewModel>
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashConnections1.IsVisible).DisposeWith(disposables);
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabConnectionProcess1.IsVisible).DisposeWith(disposables);
                     this.Bind(ViewModel, vm => vm.TabMainSelectedIndex, v => v.tabMain1.SelectedIndex).DisposeWith(disposables);
+                    this.WhenAnyValue(v => v.ViewModel!.ShowClashUI)
+                        .Subscribe(showClashUI =>
+                        {
+                            if (!showClashUI && tabTopMain1.SelectedIndex != 1)
+                            {
+                                tabTopMain1.SelectedIndex = 1;
+                            }
+                        })
+                        .DisposeWith(disposables);
                     break;
 
                 case EGirdOrientation.Tab:
