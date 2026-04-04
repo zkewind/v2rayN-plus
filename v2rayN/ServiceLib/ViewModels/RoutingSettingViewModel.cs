@@ -2,6 +2,8 @@ namespace ServiceLib.ViewModels;
 
 public class RoutingSettingViewModel : MyReactiveObject
 {
+    private readonly string? _preferredSelectedRoutingId;
+
     #region Reactive
 
     public IObservableCollection<RoutingItemModel> RoutingItems { get; } = new ObservableCollectionExtended<RoutingItemModel>();
@@ -28,10 +30,11 @@ public class RoutingSettingViewModel : MyReactiveObject
 
     #endregion Reactive
 
-    public RoutingSettingViewModel(Func<EViewAction, object?, Task<bool>>? updateView)
+    public RoutingSettingViewModel(Func<EViewAction, object?, Task<bool>>? updateView, string? preferredSelectedRoutingId = null)
     {
         _config = AppManager.Instance.Config;
         _updateView = updateView;
+        _preferredSelectedRoutingId = preferredSelectedRoutingId;
 
         var canEditRemove = this.WhenAnyValue(
             x => x.SelectedSource,
@@ -74,16 +77,17 @@ public class RoutingSettingViewModel : MyReactiveObject
         DomainStrategy4Singbox = _config.RoutingBasicItem.DomainStrategy4Singbox;
 
         await ConfigHandler.InitBuiltinRouting(_config);
-        await RefreshRoutingItems();
+        await RefreshRoutingItems(_preferredSelectedRoutingId);
     }
 
     #region Refresh Save
 
-    public async Task RefreshRoutingItems()
+    public async Task RefreshRoutingItems(string? preferredSelectedRoutingId = null)
     {
+        var selectedId = preferredSelectedRoutingId ?? SelectedSource?.Id ?? _preferredSelectedRoutingId;
         RoutingItems.Clear();
 
-        var routings = await AppManager.Instance.RoutingItems();
+        var routings = await AppManager.Instance.RoutingItems() ?? [];
         foreach (var item in routings)
         {
             var it = new RoutingItemModel()
@@ -99,6 +103,11 @@ public class RoutingSettingViewModel : MyReactiveObject
             };
             RoutingItems.Add(it);
         }
+
+        SelectedSource = RoutingItems.FirstOrDefault(t => t.Id == selectedId)
+                         ?? RoutingItems.FirstOrDefault(t => t.IsActive)
+                         ?? RoutingItems.FirstOrDefault()
+                         ?? new();
     }
 
     private async Task SaveRoutingAsync()
@@ -136,7 +145,7 @@ public class RoutingSettingViewModel : MyReactiveObject
         }
         if (await _updateView?.Invoke(EViewAction.RoutingRuleSettingWindow, item) == true)
         {
-            await RefreshRoutingItems();
+            await RefreshRoutingItems(item.Id);
             IsModified = true;
         }
     }
@@ -158,7 +167,7 @@ public class RoutingSettingViewModel : MyReactiveObject
 
         if (await _updateView?.Invoke(EViewAction.RoutingRuleSettingWindow, item) == true)
         {
-            await RefreshRoutingItems();
+            await RefreshRoutingItems(item.Id);
             IsModified = true;
         }
     }
@@ -198,7 +207,7 @@ public class RoutingSettingViewModel : MyReactiveObject
 
         if (await ConfigHandler.SetDefaultRouting(_config, item) == 0)
         {
-            await RefreshRoutingItems();
+            await RefreshRoutingItems(item.Id);
             IsModified = true;
         }
     }

@@ -399,5 +399,12 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+/.dotnet-home/
 /.dotnet_cli_home/
+/.dotnet-cli/
 /.dotnet/
+.omx/
+.claude/settings.local.json
+/.codex/
+

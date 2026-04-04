@@ -2,7 +2,7 @@ namespace v2rayN.Views;
 
 public partial class RoutingSettingWindow
 {
-    public RoutingSettingWindow()
+    public RoutingSettingWindow(string? preferredSelectedRoutingId = null)
     {
         InitializeComponent();
 
@@ -14,7 +14,7 @@ public partial class RoutingSettingWindow
         menuRoutingAdvancedSelectAll.Click += menuRoutingAdvancedSelectAll_Click;
         btnCancel.Click += btnCancel_Click;
 
-        ViewModel = new RoutingSettingViewModel(UpdateViewHandler);
+        ViewModel = new RoutingSettingViewModel(UpdateViewHandler, preferredSelectedRoutingId);
 
         cmbdomainStrategy.ItemsSource = Global.DomainStrategies;
         cmbdomainStrategy4Singbox.ItemsSource = Global.DomainStrategies4Sbox;

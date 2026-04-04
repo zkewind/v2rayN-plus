@@ -330,6 +330,7 @@
                             <TabItem x:Name="tabMsgView" Header="{x:Static resx:ResUI.MsgInformationTitle}" />
                             <TabItem x:Name="tabClashProxies" Header="{x:Static resx:ResUI.TbProxies}" />
                             <TabItem x:Name="tabClashConnections" Header="{x:Static resx:ResUI.TbConnections}" />
+                            <TabItem x:Name="tabRoutingRules" Header="路由规则" />
                         </TabControl>
                     </Grid>
                     <Grid x:Name="gridMain1" Visibility="Collapsed">
@@ -376,6 +377,17 @@
                                             HorizontalAlignment="Center"
                                             Style="{StaticResource ToolbarTextBlock}"
                                             Text="{x:Static resx:ResUI.TbConnections}" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                            </TabItem>
+                            <TabItem x:Name="tabRoutingRules1">
+                                <TabItem.Header>
+                                    <StackPanel>
+                                        <materialDesign:PackIcon HorizontalAlignment="Center" Kind="ShapeOutline" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            Style="{StaticResource ToolbarTextBlock}"
+                                            Text="路由规则" />
                                     </StackPanel>
                                 </TabItem.Header>
                             </TabItem>
@@ -428,6 +440,17 @@
                                             HorizontalAlignment="Center"
                                             Style="{StaticResource ToolbarTextBlock}"
                                             Text="{x:Static resx:ResUI.TbConnections}" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                            </TabItem>
+                            <TabItem x:Name="tabRoutingRules2">
+                                <TabItem.Header>
+                                    <StackPanel>
+                                        <materialDesign:PackIcon HorizontalAlignment="Center" Kind="ShapeOutline" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            Style="{StaticResource ToolbarTextBlock}"
+                                            Text="路由规则" />
                                     </StackPanel>
                                 </TabItem.Header>
                             </TabItem>

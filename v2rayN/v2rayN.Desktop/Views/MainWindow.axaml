@@ -120,6 +120,7 @@
                         <TabItem x:Name="tabClashProxies" Header="{x:Static resx:ResUI.TbProxies}" />
                         <TabItem x:Name="tabClashConnections" Header="{x:Static resx:ResUI.TbConnections}" />
                         <TabItem x:Name="tabConnectionProcess" Header="{x:Static resx:ResUI.TbProcessConnections}" />
+                        <TabItem x:Name="tabRoutingRules" Header="路由规则" />
                     </TabControl>
                 </Grid>
                 <Grid
@@ -135,6 +136,7 @@
                         <TabItem x:Name="tabProfiles1" Header="{x:Static resx:ResUI.menuSubscription}" />
                         <TabItem x:Name="tabClashConnections1" Header="{x:Static resx:ResUI.TbConnections}" />
                         <TabItem x:Name="tabConnectionProcess1" Header="{x:Static resx:ResUI.TbProcessConnections}" />
+                        <TabItem x:Name="tabRoutingRules1" Header="路由规则" />
                     </TabControl>
                     <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
                     <TabControl
@@ -151,6 +153,7 @@
                         <TabItem x:Name="tabClashProxies2" Header="{x:Static resx:ResUI.TbProxies}" />
                         <TabItem x:Name="tabClashConnections2" Header="{x:Static resx:ResUI.TbConnections}" />
                         <TabItem x:Name="tabConnectionProcess2" Header="{x:Static resx:ResUI.TbProcessConnections}" />
+                        <TabItem x:Name="tabRoutingRules2" Header="路由规则" />
                     </TabControl>
                 </Grid>
             </Grid>

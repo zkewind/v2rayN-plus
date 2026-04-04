@@ -32,27 +32,30 @@ public partial class MainWindow
         switch (_config.UiItem.MainGirdOrientation)
         {
             case EGirdOrientation.Horizontal:
-                tabProfiles.Content ??= new ProfilesView();
+                tabProfiles.Content ??= new ProfilesTabsView();
                 tabMsgView.Content ??= new MsgView();
                 tabClashProxies.Content ??= new ClashProxiesView();
                 tabClashConnections.Content ??= new ClashConnectionsView();
+                tabRoutingRules.Content ??= new RoutingRulesView();
                 gridMain.Visibility = Visibility.Visible;
                 break;
 
             case EGirdOrientation.Vertical:
-                tabProfiles1.Content ??= new ProfilesView();
+                tabProfiles1.Content ??= new ProfilesTabsView();
                 tabMsgView1.Content ??= new MsgView();
                 tabClashProxies1.Content ??= new ClashProxiesView();
                 tabClashConnections1.Content ??= new ClashConnectionsView();
+                tabRoutingRules1.Content ??= new RoutingRulesView();
                 gridMain1.Visibility = Visibility.Visible;
                 break;
 
             case EGirdOrientation.Tab:
             default:
-                tabProfiles2.Content ??= new ProfilesView();
+                tabProfiles2.Content ??= new ProfilesTabsView();
                 tabMsgView2.Content ??= new MsgView();
                 tabClashProxies2.Content ??= new ClashProxiesView();
                 tabClashConnections2.Content ??= new ClashConnectionsView();
+                tabRoutingRules2.Content ??= new RoutingRulesView();
                 gridMain2.Visibility = Visibility.Visible;
                 break;
         }
@@ -107,6 +110,7 @@ public partial class MainWindow
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabMsgView.Visibility).DisposeWith(disposables);
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashProxies.Visibility).DisposeWith(disposables);
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashConnections.Visibility).DisposeWith(disposables);
+                    this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabRoutingRules.Visibility).DisposeWith(disposables);
                     this.Bind(ViewModel, vm => vm.TabMainSelectedIndex, v => v.tabMain.SelectedIndex).DisposeWith(disposables);
                     break;
 
@@ -114,6 +118,7 @@ public partial class MainWindow
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabMsgView1.Visibility).DisposeWith(disposables);
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashProxies1.Visibility).DisposeWith(disposables);
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashConnections1.Visibility).DisposeWith(disposables);
+                    this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabRoutingRules1.Visibility).DisposeWith(disposables);
                     this.Bind(ViewModel, vm => vm.TabMainSelectedIndex, v => v.tabMain1.SelectedIndex).DisposeWith(disposables);
                     break;
 
@@ -121,6 +126,7 @@ public partial class MainWindow
                 default:
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashProxies2.Visibility).DisposeWith(disposables);
                     this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabClashConnections2.Visibility).DisposeWith(disposables);
+                    this.OneWayBind(ViewModel, vm => vm.ShowClashUI, v => v.tabRoutingRules2.Visibility).DisposeWith(disposables);
                     this.Bind(ViewModel, vm => vm.TabMainSelectedIndex, v => v.tabMain2.SelectedIndex).DisposeWith(disposables);
                     break;
             }
@@ -213,7 +219,7 @@ public partial class MainWindow
                 return new DNSSettingWindow().ShowDialog() ?? false;
 
             case EViewAction.RoutingSettingWindow:
-                return new RoutingSettingWindow().ShowDialog() ?? false;
+                return new RoutingSettingWindow(obj as string).ShowDialog() ?? false;
 
             case EViewAction.OptionSettingWindow:
                 return new OptionSettingWindow().ShowDialog() ?? false;

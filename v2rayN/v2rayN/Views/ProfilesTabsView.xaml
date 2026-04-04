@@ -1,0 +1,21 @@
+<UserControl
+    x:Class="v2rayN.Views.ProfilesTabsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resx="clr-namespace:ServiceLib.Resx;assembly=ServiceLib"
+    xmlns:view="clr-namespace:v2rayN.Views"
+    Style="{StaticResource ViewGlobal}"
+    mc:Ignorable="d">
+    <Grid>
+        <TabControl HorizontalContentAlignment="Left">
+            <TabItem Header="{x:Static resx:ResUI.menuServers}">
+                <view:ProfilesView />
+            </TabItem>
+            <TabItem Header="{x:Static resx:ResUI.menuRuleList}">
+                <view:RoutingRulesView />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

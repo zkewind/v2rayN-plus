@@ -45,6 +45,13 @@ public partial class RoutingSettingWindow : WindowBase<RoutingSettingViewModel>
         });
     }
 
+    // New constructor overload to accept preferred selected routing id
+    public RoutingSettingWindow(string? preferredSelectedRoutingId) : this()
+    {
+        // Replace ViewModel with one that uses the preferred selected id
+        ViewModel = new RoutingSettingViewModel(UpdateViewHandler, preferredSelectedRoutingId);
+    }
+
     private async Task<bool> UpdateViewHandler(EViewAction action, object? obj)
     {
         switch (action)
