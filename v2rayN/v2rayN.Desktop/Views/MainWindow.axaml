@@ -113,6 +113,7 @@
                     <ContentControl x:Name="tabProfiles" Grid.Column="0" />
                     <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
                     <TabControl
+                        Classes="chrome-tabs"
                         x:Name="tabMain"
                         Grid.Column="2"
                         HorizontalContentAlignment="Left">
@@ -128,6 +129,7 @@
                     IsVisible="False"
                     RowDefinitions="1*,10,1*">
                     <TabControl
+                        Classes="chrome-tabs"
                         x:Name="tabTopMain1"
                         Grid.Row="0"
                         HorizontalContentAlignment="Left"
