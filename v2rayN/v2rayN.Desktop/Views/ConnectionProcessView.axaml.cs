@@ -7,6 +7,7 @@ public partial class ConnectionProcessView : ReactiveUserControl<ConnectionProce
         InitializeComponent();
 
         ViewModel = new ConnectionProcessViewModel(UpdateViewHandler);
+        lstProcessConnections.Sorting += LstProcessConnections_Sorting;
 
         this.WhenActivated(disposables =>
         {
@@ -22,6 +23,12 @@ public partial class ConnectionProcessView : ReactiveUserControl<ConnectionProce
             this.Bind(ViewModel, vm => vm.ShowProxyConnections, v => v.btnShowProxyConnections.IsChecked).DisposeWith(disposables);
             this.Bind(ViewModel, vm => vm.AutoRefresh, v => v.togAutoRefresh.IsChecked).DisposeWith(disposables);
         });
+    }
+
+    private void LstProcessConnections_Sorting(object? sender, DataGridColumnEventArgs e)
+    {
+        e.Handled = true;
+        ViewModel?.ApplyColumnSort(e.Column?.Tag?.ToString());
     }
 
     private async Task<bool> UpdateViewHandler(EViewAction action, object? obj)

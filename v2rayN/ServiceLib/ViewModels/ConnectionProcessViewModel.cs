@@ -6,9 +6,14 @@ namespace ServiceLib.ViewModels;
 
 public class ConnectionProcessViewModel : MyReactiveObject
 {
+    private const string ProcessSortColumn = "Process";
     private const string DirectOutboundDisplay = "Direct";
     private const string ProxyOutboundDisplay = "Proxy";
     private const string ActiveStatusDisplay = "Active";
+
+    private bool _processGroupSortAscending = true;
+    private string? _childSortColumn;
+    private bool _childSortAscending = true;
 
     public IObservableCollection<ConnectionProcessModel> ProcessItems { get; } = new ObservableCollectionExtended<ConnectionProcessModel>();
 
@@ -196,12 +201,13 @@ public class ConnectionProcessViewModel : MyReactiveObject
             AddGroupedRow(groupedRows, row.ProcessName ?? "(unknown)", row);
         }
 
-        foreach (var grp in groupedRows.OrderBy(g => g.Key, StringComparer.OrdinalIgnoreCase))
+        var orderedGroups = _processGroupSortAscending
+            ? groupedRows.OrderBy(g => g.Key, StringComparer.OrdinalIgnoreCase)
+            : groupedRows.OrderByDescending(g => g.Key, StringComparer.OrdinalIgnoreCase);
+
+        foreach (var grp in orderedGroups)
         {
-            var children = grp.Value
-                .OrderByDescending(x => x.IsFailed)
-                .ThenByDescending(x => x.SortTime)
-                .ToList();
+            var children = SortChildren(grp.Value);
 
             if (children.Count == 0) continue;
 
@@ -216,6 +222,69 @@ public class ConnectionProcessViewModel : MyReactiveObject
         }
 
         RebuildFlatList();
+    }
+
+    public void ApplyColumnSort(string? columnTag)
+    {
+        if (columnTag.IsNullOrEmpty())
+        {
+            return;
+        }
+
+        if (string.Equals(columnTag, ProcessSortColumn, StringComparison.OrdinalIgnoreCase))
+        {
+            _processGroupSortAscending = !_processGroupSortAscending;
+        }
+        else if (string.Equals(_childSortColumn, columnTag, StringComparison.OrdinalIgnoreCase))
+        {
+            _childSortAscending = !_childSortAscending;
+        }
+        else
+        {
+            _childSortColumn = columnTag;
+            _childSortAscending = true;
+        }
+
+        ApplyFilters();
+    }
+
+    private List<ConnectionProcessModel> SortChildren(IEnumerable<ConnectionProcessModel> children)
+    {
+        if (_childSortColumn.IsNullOrEmpty())
+        {
+            return children
+                .OrderByDescending(x => x.IsFailed)
+                .ThenByDescending(x => x.SortTime)
+                .ToList();
+        }
+
+        IOrderedEnumerable<ConnectionProcessModel> ordered = _childSortColumn switch
+        {
+            "Host" => OrderByString(children, x => x.Host),
+            "Network" => OrderByString(children, x => x.Network),
+            "Type" => OrderByString(children, x => x.Type),
+            "Outbound" => OrderByString(children, x => x.Outbound),
+            "Status" => OrderByString(children, x => x.Status),
+            "Chain" => OrderByString(children, x => x.Chain),
+            "Elapsed" => _childSortAscending
+                ? children.OrderByDescending(x => x.SortTime)
+                : children.OrderBy(x => x.SortTime),
+            _ => children
+                .OrderByDescending(x => x.IsFailed)
+                .ThenByDescending(x => x.SortTime),
+        };
+
+        return ordered
+            .ThenByDescending(x => x.IsFailed)
+            .ThenByDescending(x => x.SortTime)
+            .ToList();
+    }
+
+    private IOrderedEnumerable<ConnectionProcessModel> OrderByString(IEnumerable<ConnectionProcessModel> children, Func<ConnectionProcessModel, string?> selector)
+    {
+        return _childSortAscending
+            ? children.OrderBy(x => selector(x) ?? string.Empty, StringComparer.OrdinalIgnoreCase)
+            : children.OrderByDescending(x => selector(x) ?? string.Empty, StringComparer.OrdinalIgnoreCase);
     }
 
     private static void AddGroupedRow(IDictionary<string, List<ConnectionProcessModel>> groupedRows, string processName, ConnectionProcessModel row)
